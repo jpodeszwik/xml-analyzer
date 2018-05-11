@@ -13,7 +13,7 @@ public class AnalyzeController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public AnalyzeResponse analyze(@RequestBody AnalyzeRequest analyzeRequest) {
-        AnalyseDetails analyzeResponse = ImmutableAnalyseDetails.builder()
+        AnalyzeDetails analyzeResponse = ImmutableAnalyzeDetails.builder()
                 .firstPost(OffsetDateTime.now())
                 .lastPost(OffsetDateTime.now())
                 .totalPosts(0)

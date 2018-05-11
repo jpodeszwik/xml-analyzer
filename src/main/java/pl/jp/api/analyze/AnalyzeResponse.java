@@ -9,5 +9,5 @@ import org.immutables.value.Value;
 public interface AnalyzeResponse {
     OffsetDateTime analyseDate();
 
-    AnalyseDetails details();
+    AnalyzeDetails details();
 }

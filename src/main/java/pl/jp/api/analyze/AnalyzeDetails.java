@@ -5,8 +5,8 @@ import java.time.OffsetDateTime;
 import org.immutables.value.Value;
 
 @Value.Immutable
-@JsonSerialize(as = ImmutableAnalyseDetails.class)
-public interface AnalyseDetails {
+@JsonSerialize(as = ImmutableAnalyzeDetails.class)
+public interface AnalyzeDetails {
     OffsetDateTime firstPost();
 
     OffsetDateTime lastPost();
