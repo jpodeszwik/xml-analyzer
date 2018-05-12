@@ -7,7 +7,6 @@ import java.util.stream.Stream;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.StartElement;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,8 +16,8 @@ public class XmlPostFileAnalysisService {
             XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
             XMLEventReader xmlEventReader = xmlInputFactory.createXMLEventReader(in);
             try {
-                Stream<StartElement> rowStream = XmlRowReader.rowStream(xmlEventReader);
-                return PostAnalyzer.analyzePosts(rowStream);
+                Stream<Post> posts = XmlPostFileReader.readPosts(xmlEventReader);
+                return PostAnalyzer.analyzePosts(posts);
             } finally {
                 xmlEventReader.close();
             }
