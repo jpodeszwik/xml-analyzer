@@ -1,4 +1,4 @@
-package pl.jp.api.analyze;
+package pl.jp.analyzer.analysis;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.time.OffsetDateTime;
@@ -6,8 +6,8 @@ import javax.annotation.Nullable;
 import org.immutables.value.Value;
 
 @Value.Immutable
-@JsonSerialize(as = ImmutableAnalyzeDetails.class)
-public interface AnalyzeDetails {
+@JsonSerialize(as = ImmutableAnalysisDetails.class)
+public interface AnalysisDetails {
     @Nullable
     OffsetDateTime firstPost();
 

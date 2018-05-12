@@ -1,10 +1,10 @@
-package pl.jp.api.analyze;
+package pl.jp.analyzer.analysis;
 
 import java.time.OffsetDateTime;
 import org.immutables.value.Value;
 
 @Value.Immutable
-public interface Post {
+interface Post {
     int id();
 
     int score();
