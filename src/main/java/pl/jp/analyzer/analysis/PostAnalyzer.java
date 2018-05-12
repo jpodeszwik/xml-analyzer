@@ -47,7 +47,7 @@ class PostAnalyzer {
     private static AnalysisDetails finish(PartialResult partialResult) {
         return ImmutableAnalysisDetails.builder()
                 .totalPosts(partialResult.count)
-                .avgScore(partialResult.scoreSum / partialResult.count)
+                .avgScore(partialResult.count == 0 ? 0 : partialResult.scoreSum / partialResult.count)
                 .firstPost(partialResult.firstPost)
                 .lastPost(partialResult.lastPost)
                 .build();

@@ -43,7 +43,6 @@ class XmlPostFileReader {
                 .map(XMLEvent::asStartElement)
                 .filter(startElement -> "row".equals(startElement.getName().getLocalPart()))
                 .map(XmlPostFileReader::toPost);
-
     }
 
     private static Post toPost(StartElement startElement) {
