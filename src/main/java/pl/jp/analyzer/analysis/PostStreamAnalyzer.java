@@ -1,6 +1,7 @@
 package pl.jp.analyzer.analysis;
 
 import java.time.OffsetDateTime;
+import java.util.Objects;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,7 @@ class PostStreamAnalyzer {
         private long scoreSum = 0;
         private OffsetDateTime lastPost;
         private OffsetDateTime firstPost;
+        private int acceptedPosts = 0;
 
         private PartialResult addPost(Post post) {
             count += 1;
@@ -28,6 +30,10 @@ class PostStreamAnalyzer {
             }
             if (firstPost == null || firstPost.isAfter(post.creationDate())) {
                 firstPost = post.creationDate();
+            }
+
+            if (Objects.nonNull(post.acceptedAnswerId())) {
+                acceptedPosts += 1;
             }
 
             return this;
@@ -42,6 +48,7 @@ class PostStreamAnalyzer {
             if (firstPost.isAfter(other.firstPost)) {
                 firstPost = other.firstPost;
             }
+            acceptedPosts += other.acceptedPosts;
             return this;
         }
     }
@@ -52,6 +59,7 @@ class PostStreamAnalyzer {
                 .avgScore(partialResult.count == 0 ? 0 : partialResult.scoreSum / partialResult.count)
                 .firstPost(partialResult.firstPost)
                 .lastPost(partialResult.lastPost)
+                .totalAcceptedPosts(partialResult.acceptedPosts)
                 .build();
     }
 

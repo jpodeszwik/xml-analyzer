@@ -20,8 +20,10 @@ public interface PostStats {
         return 0;
     }
 
-    @Nullable
-    Long totalAcceptedPosts();
+    @Value.Default
+    default long totalAcceptedPosts() {
+        return 0;
+    }
 
     @Value.Default
     default long avgScore() {
