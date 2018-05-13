@@ -19,7 +19,7 @@ public class XmlPostFileAnalysisService {
         this.postStreamAnalyzer = postStreamAnalyzer;
     }
 
-    public AnalysisDetails analyze(URL url) throws IOException, XMLStreamException {
+    public PostStats analyze(URL url) throws IOException, XMLStreamException {
         try (InputStream in = url.openStream()) {
             XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
             XMLEventReader xmlEventReader = xmlInputFactory.createXMLEventReader(in);

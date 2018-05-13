@@ -15,10 +15,10 @@ public class PostStreamAnalyzerTest {
         Stream<Post> posts = Stream.empty();
 
         // when
-        AnalysisDetails analysisDetails = postStreamAnalyzer.analyzePosts(posts);
+        PostStats postStats = postStreamAnalyzer.analyzePosts(posts);
 
         // then
-        assertThat(analysisDetails).isEqualTo(ImmutableAnalysisDetails.of());
+        assertThat(postStats).isEqualTo(ImmutablePostStats.of());
     }
 
     @Test
@@ -27,13 +27,13 @@ public class PostStreamAnalyzerTest {
         Stream<Post> posts = Stream.of(POST_1);
 
         // when
-        AnalysisDetails analysisDetails = postStreamAnalyzer.analyzePosts(posts);
+        PostStats postStats = postStreamAnalyzer.analyzePosts(posts);
 
         // then
-        assertThat(analysisDetails.totalPosts()).isEqualTo(1);
-        assertThat(analysisDetails.avgScore()).isEqualTo(POST_1.score());
-        assertThat(analysisDetails.firstPost()).isEqualTo(POST_1.creationDate());
-        assertThat(analysisDetails.lastPost()).isEqualTo(POST_1.creationDate());
+        assertThat(postStats.totalPosts()).isEqualTo(1);
+        assertThat(postStats.avgScore()).isEqualTo(POST_1.score());
+        assertThat(postStats.firstPost()).isEqualTo(POST_1.creationDate());
+        assertThat(postStats.lastPost()).isEqualTo(POST_1.creationDate());
     }
 
     @Test
@@ -42,12 +42,12 @@ public class PostStreamAnalyzerTest {
         Stream<Post> posts = Stream.of(POST_1, POST_2);
 
         // when
-        AnalysisDetails analysisDetails = postStreamAnalyzer.analyzePosts(posts);
+        PostStats postStats = postStreamAnalyzer.analyzePosts(posts);
 
         // then
-        assertThat(analysisDetails.totalPosts()).isEqualTo(2);
-        assertThat(analysisDetails.avgScore()).isEqualTo((POST_1.score() + POST_2.score()) / 2);
-        assertThat(analysisDetails.firstPost()).isEqualTo(POST_1.creationDate());
-        assertThat(analysisDetails.lastPost()).isEqualTo(POST_2.creationDate());
+        assertThat(postStats.totalPosts()).isEqualTo(2);
+        assertThat(postStats.avgScore()).isEqualTo((POST_1.score() + POST_2.score()) / 2);
+        assertThat(postStats.firstPost()).isEqualTo(POST_1.creationDate());
+        assertThat(postStats.lastPost()).isEqualTo(POST_2.creationDate());
     }
 }

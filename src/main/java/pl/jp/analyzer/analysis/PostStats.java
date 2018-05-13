@@ -6,8 +6,8 @@ import javax.annotation.Nullable;
 import org.immutables.value.Value;
 
 @Value.Immutable(singleton = true)
-@JsonSerialize(as = ImmutableAnalysisDetails.class)
-public interface AnalysisDetails {
+@JsonSerialize(as = ImmutablePostStats.class)
+public interface PostStats {
     @Nullable
     OffsetDateTime firstPost();
 

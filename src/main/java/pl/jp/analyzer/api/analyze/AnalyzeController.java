@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import pl.jp.analyzer.analysis.AnalysisDetails;
+import pl.jp.analyzer.analysis.PostStats;
 import pl.jp.analyzer.analysis.XmlFileException;
 import pl.jp.analyzer.analysis.XmlPostFileAnalysisService;
 
@@ -37,7 +37,7 @@ class AnalyzeController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     AnalyzeResponse analyze(@RequestBody AnalyzeRequest analyzeRequest) throws IOException, XMLStreamException {
-        AnalysisDetails analysisDetails = xmlPostFileAnalysisService.analyze(analyzeRequest.url());
+        PostStats analysisDetails = xmlPostFileAnalysisService.analyze(analyzeRequest.url());
         return ImmutableAnalyzeResponse.builder()
                 .analyseDate(OffsetDateTime.now())
                 .details(analysisDetails)

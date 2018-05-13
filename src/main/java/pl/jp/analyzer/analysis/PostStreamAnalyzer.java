@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 class PostStreamAnalyzer {
-    private static final Collector<Post, PartialResult, AnalysisDetails> POST_STATISTICS_COLLECTOR = Collector.of(
+    private static final Collector<Post, PartialResult, PostStats> POST_STATISTICS_COLLECTOR = Collector.of(
             PartialResult::new,
             PartialResult::addPost,
             PartialResult::combine,
@@ -46,8 +46,8 @@ class PostStreamAnalyzer {
         }
     }
 
-    private static AnalysisDetails finish(PartialResult partialResult) {
-        return ImmutableAnalysisDetails.builder()
+    private static PostStats finish(PartialResult partialResult) {
+        return ImmutablePostStats.builder()
                 .totalPosts(partialResult.count)
                 .avgScore(partialResult.count == 0 ? 0 : partialResult.scoreSum / partialResult.count)
                 .firstPost(partialResult.firstPost)
@@ -55,7 +55,7 @@ class PostStreamAnalyzer {
                 .build();
     }
 
-    AnalysisDetails analyzePosts(Stream<Post> posts) {
+    PostStats analyzePosts(Stream<Post> posts) {
         return posts
                 .collect(POST_STATISTICS_COLLECTOR);
     }
