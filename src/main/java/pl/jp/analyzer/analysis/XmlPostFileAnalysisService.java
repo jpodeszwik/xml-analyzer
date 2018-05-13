@@ -5,5 +5,5 @@ import java.net.URL;
 import javax.xml.stream.XMLStreamException;
 
 public interface XmlPostFileAnalysisService {
-    PostStats analyze(URL url) throws IOException, XMLStreamException;
+    PostStats analyzeXmlPostFile(URL url) throws IOException, XMLStreamException;
 }

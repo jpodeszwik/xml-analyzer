@@ -37,7 +37,7 @@ class AnalyzeController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     AnalyzeResponse analyze(@RequestBody AnalyzeRequest analyzeRequest) throws IOException, XMLStreamException {
-        PostStats analysisDetails = xmlPostFileAnalysisService.analyze(analyzeRequest.url());
+        PostStats analysisDetails = xmlPostFileAnalysisService.analyzeXmlPostFile(analyzeRequest.url());
         return ImmutableAnalyzeResponse.builder()
                 .analyseDate(OffsetDateTime.now())
                 .details(analysisDetails)
