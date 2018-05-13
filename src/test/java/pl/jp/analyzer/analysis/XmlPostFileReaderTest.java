@@ -3,7 +3,9 @@ package pl.jp.analyzer.analysis;
 import com.google.common.collect.ImmutableList;
 import com.google.common.io.Resources;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.stream.Stream;
+import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import org.junit.Test;
@@ -18,8 +20,8 @@ public class XmlPostFileReaderTest {
     @Test
     public void forEmptyPosts_shouldReturnEmptyStream() throws IOException, XMLStreamException {
         // given
-        var inputStream = Resources.getResource("zero-posts.xml").openStream();
-        var xmlEventReader = xmlInputFactory.createXMLEventReader(inputStream);
+        InputStream inputStream = Resources.getResource("zero-posts.xml").openStream();
+        XMLEventReader xmlEventReader = xmlInputFactory.createXMLEventReader(inputStream);
 
         // when
         Stream<Post> postStream = xmlPostFileReader.readPosts(xmlEventReader);
@@ -31,8 +33,8 @@ public class XmlPostFileReaderTest {
     @Test
     public void forOnePost_shouldReturnSingleElement() throws IOException, XMLStreamException {
         // given
-        var inputStream = Resources.getResource("one-post.xml").openStream();
-        var xmlEventReader = xmlInputFactory.createXMLEventReader(inputStream);
+        InputStream inputStream = Resources.getResource("one-post.xml").openStream();
+        XMLEventReader xmlEventReader = xmlInputFactory.createXMLEventReader(inputStream);
 
         // when
         Stream<Post> postStream = xmlPostFileReader.readPosts(xmlEventReader);
@@ -44,8 +46,8 @@ public class XmlPostFileReaderTest {
     @Test
     public void forTwoPosts_shouldReturnTwoElements() throws IOException, XMLStreamException {
         // given
-        var inputStream = Resources.getResource("two-posts.xml").openStream();
-        var xmlEventReader = xmlInputFactory.createXMLEventReader(inputStream);
+        InputStream inputStream = Resources.getResource("two-posts.xml").openStream();
+        XMLEventReader xmlEventReader = xmlInputFactory.createXMLEventReader(inputStream);
 
         // when
         Stream<Post> postStream = xmlPostFileReader.readPosts(xmlEventReader);
@@ -57,8 +59,8 @@ public class XmlPostFileReaderTest {
     @Test(expected = XmlFileException.class)
     public void forInvalidXmlFile_shouldThrowException() throws IOException, XMLStreamException {
         // given
-        var inputStream = Resources.getResource("invalid-file.xml").openStream();
-        var xmlEventReader = xmlInputFactory.createXMLEventReader(inputStream);
+        InputStream inputStream = Resources.getResource("invalid-file.xml").openStream();
+        XMLEventReader xmlEventReader = xmlInputFactory.createXMLEventReader(inputStream);
 
         // when
         Stream<Post> postStream = xmlPostFileReader.readPosts(xmlEventReader);
