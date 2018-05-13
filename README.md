@@ -13,5 +13,7 @@ It might be also necessary to configure generated sources root.
 ## run
 ```java -jar target/xml-analyzer-*.jar```
 
-Docker image:
-```docker run -p 8080:8080 -d jpodeszwik/xml-analyzer```
+## Docker image:
+https://hub.docker.com/r/jpodeszwik/xml-analyzer/
+
+```docker run -it -p 8080:8080 jpodeszwik/xml-analyzer```
