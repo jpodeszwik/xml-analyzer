@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AnalyzeControllerRemoteFileIT {
+public class AnalyzeControllerRemoteFileIntegrationTest {
     private static final int MOCK_SERVER_PORT = 1080;
 
     @Autowired

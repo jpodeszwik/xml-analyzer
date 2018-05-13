@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AnalyzeControllerLocalFileIT {
+public class AnalyzeControllerLocalFileIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
