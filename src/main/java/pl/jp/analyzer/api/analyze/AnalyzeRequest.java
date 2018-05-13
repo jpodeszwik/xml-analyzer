@@ -8,4 +8,8 @@ import org.immutables.value.Value;
 @JsonDeserialize(as = ImmutableAnalyzeRequest.class)
 public interface AnalyzeRequest {
     URL url();
+
+    static AnalyzeRequest of(URL url) {
+        return ImmutableAnalyzeRequest.builder().url(url).build();
+    }
 }

@@ -1,6 +1,5 @@
 package pl.jp.analyzer.api.analyze;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Resources;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,10 +22,7 @@ public class AnalyzeControllerTest {
 
     @Test
     public void shouldCountFileStats() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        ImmutableAnalyzeRequest analyzeRequest = ImmutableAnalyzeRequest.builder().url(Resources.getResource("two-posts.xml")).build();
-        String analyzeRequestBody = mapper.writeValueAsString(analyzeRequest);
-
+        String analyzeRequestBody = Helper.analyzeRequestJsonForUrl(Resources.getResource("two-posts.xml"));
         this.mockMvc.perform(
                 post("/analyze")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
