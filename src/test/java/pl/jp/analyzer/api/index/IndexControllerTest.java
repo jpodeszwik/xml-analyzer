@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -20,7 +21,13 @@ public class IndexControllerTest {
 
     @Test
     public void shouldReturnApplicationName() throws Exception {
-        this.mockMvc.perform(get("/"))
+        // given
+
+        // when
+        ResultActions resultActions = mockMvc.perform(get("/"));
+
+        // then
+        resultActions
                 .andExpect(status().isOk())
                 .andExpect(content().json("{'applicationName': 'xml-analyzer'}"));
     }

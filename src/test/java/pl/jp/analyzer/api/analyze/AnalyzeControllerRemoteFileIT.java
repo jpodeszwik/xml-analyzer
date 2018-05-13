@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
@@ -25,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AnalyzeControllerRemoteFileTest {
+public class AnalyzeControllerRemoteFileIT {
     private static final int MOCK_SERVER_PORT = 1080;
 
     @Autowired
@@ -45,6 +46,7 @@ public class AnalyzeControllerRemoteFileTest {
 
     @Test
     public void shouldDownloadAndProcessRemoteFile() throws Exception {
+        // given
         var xmlBody = Resources.toString(Resources.getResource("two-posts.xml"), Charset.defaultCharset());
         mockServer.when(
                 request()
@@ -54,14 +56,17 @@ public class AnalyzeControllerRemoteFileTest {
                         .withStatusCode(HttpStatusCode.OK_200.code())
                         .withBody(xmlBody)
         );
-
         String analyzeRequestBody = Helper.analyzeRequestJsonForUrl(new URL("http://localhost:" + MOCK_SERVER_PORT + "/file.xml"));
 
-        this.mockMvc.perform(
+        // when
+        ResultActions resultActions = mockMvc.perform(
                 post("/analyze")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content(analyzeRequestBody)
-        )
+        );
+
+        // then
+        resultActions
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(content().json("{'details' : {'totalPosts': 2, 'avgScore': 7}}"));
@@ -69,6 +74,7 @@ public class AnalyzeControllerRemoteFileTest {
 
     @Test
     public void forUrlReturning404_shouldReturnBadRequest() throws Exception {
+        // given
         mockServer.when(request())
                 .respond(response()
                         .withStatusCode(HttpStatusCode.NOT_FOUND_404.code())
@@ -76,16 +82,20 @@ public class AnalyzeControllerRemoteFileTest {
 
         String analyzeRequestBody = Helper.analyzeRequestJsonForUrl(new URL("http://localhost:" + MOCK_SERVER_PORT + "/file.xml"));
 
-        this.mockMvc.perform(
+        // when
+        ResultActions resultActions = mockMvc.perform(
                 post("/analyze")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content(analyzeRequestBody)
-        )
-                .andExpect(status().isBadRequest());
+        );
+
+        // then
+        resultActions.andExpect(status().isBadRequest());
     }
 
     @Test
     public void forInvalidXmlFile_shouldReturnBadRequest() throws Exception {
+        // given
         var xmlBody = Resources.toString(Resources.getResource("invalid-file.xml"), Charset.defaultCharset());
         mockServer.when(
                 request()
@@ -95,14 +105,16 @@ public class AnalyzeControllerRemoteFileTest {
                         .withStatusCode(HttpStatusCode.OK_200.code())
                         .withBody(xmlBody)
         );
-
         String analyzeRequestBody = Helper.analyzeRequestJsonForUrl(new URL("http://localhost:" + MOCK_SERVER_PORT + "/file.xml"));
 
-        this.mockMvc.perform(
+        // when
+        ResultActions resultActions = mockMvc.perform(
                 post("/analyze")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content(analyzeRequestBody)
-        )
-                .andExpect(status().isBadRequest());
+        );
+
+        // then
+        resultActions.andExpect(status().isBadRequest());
     }
 }
