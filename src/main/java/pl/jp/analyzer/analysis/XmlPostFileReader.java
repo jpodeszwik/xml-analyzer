@@ -11,7 +11,9 @@ import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
+import org.springframework.stereotype.Component;
 
+@Component
 class XmlPostFileReader {
     private static final class EventIterator implements Iterator<XMLEvent> {
         private final XMLEventReader xmlEventReader;
@@ -30,12 +32,12 @@ class XmlPostFileReader {
             try {
                 return xmlEventReader.nextEvent();
             } catch (XMLStreamException e) {
-                throw new IllegalStateException("Unexpected problem while reading Xml event", e);
+                throw new XmlFileException("Unexpected problem while reading Xml event", e);
             }
         }
     }
 
-    static Stream<Post> readPosts(XMLEventReader xmlEventReader) {
+    Stream<Post> readPosts(XMLEventReader xmlEventReader) {
         EventIterator eventIterator = new EventIterator(xmlEventReader);
         Stream<XMLEvent> targetStream = Streams.stream(eventIterator);
 

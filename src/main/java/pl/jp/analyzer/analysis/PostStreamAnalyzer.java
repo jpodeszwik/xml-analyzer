@@ -3,13 +3,15 @@ package pl.jp.analyzer.analysis;
 import java.time.OffsetDateTime;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
+import org.springframework.stereotype.Component;
 
-class PostAnalyzer {
+@Component
+class PostStreamAnalyzer {
     private static final Collector<Post, PartialResult, AnalysisDetails> POST_STATISTICS_COLLECTOR = Collector.of(
             PartialResult::new,
             PartialResult::addPost,
             PartialResult::combine,
-            PostAnalyzer::finish
+            PostStreamAnalyzer::finish
     );
 
     private static class PartialResult {
@@ -53,7 +55,7 @@ class PostAnalyzer {
                 .build();
     }
 
-    static AnalysisDetails analyzePosts(Stream<Post> posts) {
+    AnalysisDetails analyzePosts(Stream<Post> posts) {
         return posts
                 .collect(POST_STATISTICS_COLLECTOR);
     }
