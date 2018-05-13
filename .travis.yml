@@ -1,0 +1,13 @@
+language: java
+
+services:
+  - docker
+
+script:
+  - mvn package
+  - docker build -t jpodeszwik/xml-analyzer .
+
+after_success:
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+  - docker push jpodeszwik/xml-analyzer
+
