@@ -66,7 +66,7 @@ class XmlPostFileReader {
 
     private static String getAttribute(StartElement startElement, String attributeName) {
         return getOptionalAttribute(startElement, attributeName)
-                .orElseThrow(() -> new IllegalStateException("Attribute " + attributeName + " could not be found"));
+                .orElseThrow(() -> new XmlFileException("Invalid xml format. Attribute " + attributeName + " could not be found for row."));
     }
 
     private static Optional<String> getOptionalAttribute(StartElement startElement, String attributeName) {
