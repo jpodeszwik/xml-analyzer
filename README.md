@@ -5,6 +5,8 @@
 This project uses code generation. To open it in ide you should configure annotation processing:
 https://immutables.github.io/apt.html
 
+It might be also necessary to configure generated sources root.
+
 ## build
 ```mvn package```
 
