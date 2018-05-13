@@ -63,6 +63,46 @@ public class AnalyzeControllerRemoteFileTest {
                         .content(analyzeRequestBody)
         )
                 .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(content().json("{'details' : {'totalPosts': 2, 'avgScore': 7}}"));
+    }
+
+    @Test
+    public void forUrlReturning404_shouldReturnBadRequest() throws Exception {
+        mockServer.when(request())
+                .respond(response()
+                        .withStatusCode(HttpStatusCode.NOT_FOUND_404.code())
+                );
+
+        String analyzeRequestBody = Helper.analyzeRequestJsonForUrl(new URL("http://localhost:" + MOCK_SERVER_PORT + "/file.xml"));
+
+        this.mockMvc.perform(
+                post("/analyze")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(analyzeRequestBody)
+        )
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void forInvalidXmlFile_shouldReturnBadRequest() throws Exception {
+        var xmlBody = Resources.toString(Resources.getResource("invalid-file.xml"), Charset.defaultCharset());
+        mockServer.when(
+                request()
+                        .withPath("/file.xml")
+        ).respond(
+                response()
+                        .withStatusCode(HttpStatusCode.OK_200.code())
+                        .withBody(xmlBody)
+        );
+
+        String analyzeRequestBody = Helper.analyzeRequestJsonForUrl(new URL("http://localhost:" + MOCK_SERVER_PORT + "/file.xml"));
+
+        this.mockMvc.perform(
+                post("/analyze")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(analyzeRequestBody)
+        )
+                .andExpect(status().isBadRequest());
     }
 }
